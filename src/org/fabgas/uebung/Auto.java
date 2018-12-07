@@ -1,4 +1,4 @@
-package Uebung;
+package org.fabgas.uebung;
 
 public class Auto {
 	public double tempo=0;

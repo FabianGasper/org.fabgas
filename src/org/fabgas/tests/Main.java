@@ -1,4 +1,4 @@
-package org.fabgas.Tests;
+package org.fabgas.tests;
 
 
 import java.text.ParseException;
