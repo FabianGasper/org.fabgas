@@ -30,7 +30,6 @@ public class SimpleDateFormat extends java.text.SimpleDateFormat{
 	
 	public SimpleDateFormat() throws ParseException {
 		super();
-		this.parse("");
 	}
 	public SimpleDateFormat(String arg0) {
 		super(arg0);

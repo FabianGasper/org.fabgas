@@ -1,46 +1,50 @@
 package org.fabgas.tests;
 
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Map.Entry;
+import org.fabgas.booleanEvaluation.BooleanEvaluation;
 
-import org.fabgas.utils.HashMap;
-import org.fabgas.utils.KeyValuePair;
-import org.fabgas.utils.Map;
-import org.fabgas.utils.SimpleDateFormat;
 
 public class Main {
+	public static class Func implements BooleanEvaluation.Func {
+		
+		public boolean call(String exp) {
+				if(exp==null)return false;
+				if(exp.equals("t")) {
+					return true;
+				}
+				if(exp.equals("f")) {
+					return false;
+				}
+				System.out.println("darf nicht sein1 >"+exp+"<");
+				return false;
+		}
+	} 
+	
+	
+	
 	public static void main(String[] args) {
-		Map<String,String> map = new HashMap<>();
-		Entry<String,String> kvp = new KeyValuePair<String, String>("foo", "bar");
-		kvp=map.put(kvp);
-/*		System.out.println(map.get("foo"));
-		System.out.println(kvp.setValue("test"));
-		System.out.println(map.get("foo"));
-		System.out.println(map.put("foo","bla"));
-		System.out.println(kvp.getValue());
-*/
+	
+		Func f = new Func();  
 		
-		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		//1390518720000
-/*	
-		try {
-			System.out.println(dt.strictParse("2014-12-24 13:75").getTime());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-*/		
-		ArrayList<String> a = new ArrayList<String>();
+		System.out.println("Ergebnis: t "+BooleanEvaluation.evaluate("(t|f)|f",f));
+		
+		System.out.println("Ergebnis: f "+BooleanEvaluation.evaluate("(t|f)&f",f));
+		
+		System.out.println("Ergebnis: t "+BooleanEvaluation.evaluate("(t&f)|t",f));
+		System.out.println("Ergebnis: f "+BooleanEvaluation.evaluate("(t&f)&t",f));
+		System.out.println("Ergebnis: t "+BooleanEvaluation.evaluate("f|t",f));
+		System.out.println("Ergebnis: f "+BooleanEvaluation.evaluate("t&f",f));
+	
+		System.out.println("Ergebnis: f "+BooleanEvaluation.evaluate("(t&f)",f));
+		System.out.println("Ergebnis: t "+BooleanEvaluation.evaluate("(t|f)",f));
+		
+		System.out.println("Ergebnis: t "+BooleanEvaluation.evaluate("(t|f)&(t|f)",f));
+		System.out.println("Ergebnis: f "+BooleanEvaluation.evaluate("(t|f)&(t&f)",f));
+		System.out.println("Ergebnis: t "+BooleanEvaluation.evaluate("(t|f|f)",f));
+		
+		
+		//System.out.println("Ergebnis: "+BooleanEvaluation.evaluate("((f&!t|t)&(!f|f))",f));
+		System.out.println("Ergebnis: t "+BooleanEvaluation.evaluate("\"t\"",f));
 
-		a.add("1");
-		a.add("2");
-		a.add("foo");
-//		System.out.println(a.remove(0));
-//		System.out.println(a);
-		for(String i:a) {
-			System.out.println("Hallo: "+i);
-		}
-		
 	} 
 }
